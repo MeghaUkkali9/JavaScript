@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title> Conway's Game of Life </title>
+    <!--Connect to javascript.-->
+    <script type="text/javascript" src="model.js">       </script>
+    <script type="text/javascript" src="view.js">       </script>
+    <script type="text/javascript" src="controller.js"> </script>
+</head>
+
+<body onresize="paint();" onload="paint();">
+
+    <div id="canvasDiv">
+        <canvas id="can" width="800" height="400">
+            Sorry, canvas tag not supported.
+        </canvas>
+    </div>
+
+    <button id="reset" type="button" value="Reset">Reset</button>
+    <button id="random" type="button" value="Random">Random</button>
+    <button id="next" type="button" value="Next">Next</button>
+
+    <hr />
+
+    <div id="boardDiv"> </div>
+
+    <script type="text/javascript">
+
+        //disallow the canvas from being selected (had to put it in a div)
+        document.getElementById("canvasDiv").disabled = true;
+
+        var g = new ConwaysGameOfLife(30, 30);
+
+        initController();
+
+        g.initializeBoard();
+        paint();  //paint() method draw the board.
+
+        console.log(g);
+
+        document.getElementById("boardDiv").innerHTML = "<pre>" + g + "</pre> \n";
+
+        //calls the initializeBoard() when random button is pressed
+        document.getElementById("random").onclick = function randomBoard() {
+            g.initializeBoard("random");
+            paint();
+            document.getElementById("boardDiv").innerHTML = "<pre>" + g + "</pre> \n";
+        }
+
+        //calls the initializeBoard() when reset button is pressed
+        document.getElementById("reset").onclick = function resetBoard() {
+            g.initializeBoard("reset");
+            paint();
+            document.getElementById("boardDiv").innerHTML = "<pre>" + g + "</pre> \n";
+        }
+
+        //calls the initializeBoard() when next button is pressed
+        document.getElementById("next").onclick = function nextGen() {
+            g.nextGeneration();
+            paint();
+            document.getElementById("boardDiv").innerHTML = "<pre>" + g + "</pre> \n";
+        }
+
+    </script>
+</body>
+
+</html>
